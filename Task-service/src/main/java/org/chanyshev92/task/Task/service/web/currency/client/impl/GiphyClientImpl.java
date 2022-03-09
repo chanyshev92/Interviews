@@ -21,7 +21,7 @@ public class GiphyClientImpl implements GiphyClient {
     private final RestTemplate restTemplate;
     
     @Override
-    public byte[] getGif(boolean isRich) {
+    public String getGifUrl(boolean isRich) {
         String url;
 
         if(isRich) {url=richUrl;}
@@ -29,10 +29,10 @@ public class GiphyClientImpl implements GiphyClient {
 
         ResponseEntity<GiphyResponse> forEntity = restTemplate.getForEntity(url, GiphyResponse.class);
 
-        String urlGif = forEntity.getBody().getData().getEmbedUrl();
+        String urlGif = forEntity.getBody().getData().getImages().getDownsizedLarge().getUrl();
         System.out.println(urlGif);
        ResponseEntity<byte[]> forEntity1 = restTemplate.getForEntity(urlGif, byte[].class);
 
-        return forEntity1.getBody();
+        return urlGif;
     }
 }
