@@ -2,15 +2,13 @@ package org.chanyshev92.task.Task.service.web.currency.client.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.chanyshev92.task.Task.service.web.currency.client.CurrencyClient;
-import org.chanyshev92.task.Task.service.web.currency.response.Rates;
+import org.chanyshev92.task.Task.service.web.currency.response.CurrencyResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -23,15 +21,13 @@ public class CurrencyClientImpl implements CurrencyClient {
     @Value("${currency.code.id}")
     private String codeId;
 
-    @Value("${currency.url}") String urlValue;
     @Value("${currency.get-rates.method}") String methodValue;
 
 
     @Override
-    public Rates getRatesByDate(LocalDate localDate) {
+    public CurrencyResponse getRatesByDate(LocalDate localDate) {
         StringBuilder urlString = new StringBuilder();
         urlString
-                .append(urlValue)
                 .append(methodValue)
                 .append("/")
                 .append(localDate)
@@ -39,7 +35,7 @@ public class CurrencyClientImpl implements CurrencyClient {
                 .append("app_id=")
                 .append(codeId);
 
-        ResponseEntity<Rates> forEntity = restTemplate.getForEntity(urlString.toString(), Rates.class);
+        ResponseEntity<CurrencyResponse> forEntity = restTemplate.getForEntity(urlString.toString(), CurrencyResponse.class);
         return forEntity.getBody();
     }
 }

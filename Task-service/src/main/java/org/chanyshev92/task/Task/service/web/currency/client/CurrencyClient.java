@@ -1,10 +1,10 @@
 package org.chanyshev92.task.Task.service.web.currency.client;
 
-import org.chanyshev92.task.Task.service.web.currency.response.Rates;
+import org.chanyshev92.task.Task.service.web.currency.response.CurrencyResponse;
 
 import java.time.LocalDate;
 
 public interface CurrencyClient {
 
-    Rates getRatesByDate(LocalDate localDate);
+    CurrencyResponse getRatesByDate(LocalDate localDate);
 }
